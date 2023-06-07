@@ -4,11 +4,13 @@ const Navbar = () => {
 
 
     const navItems = <>
-        <Link><li><a>Home</a></li></Link>
-        <Link><li><a>Instructors</a></li></Link>
+        <Link to='/'><li>Home</li></Link>
+        <Link to='/'><li>Instructors</li></Link>
+        <Link to='/'><li>Classes</li></Link>
+        <Link to='/'><li>Dashboard</li></Link>
     </>
     return (
-        <div className="navbar bg-gray-800 text-white">
+        <div className="navbar bg-gray-800 text-white px-12">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -26,7 +28,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <a className="btn btn-sm">Login</a>
             </div>
         </div>
     );
