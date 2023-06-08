@@ -1,10 +1,47 @@
+import { useContext, useState } from 'react';
 import bg from '../../assets/bg1.svg'
 import { useForm } from "react-hook-form";
+import { AuthContext } from '../../providers/AuthProvider';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import SocialLogin from './SocialLogin';
 
 const Register = () => {
+    const {emailSignUp, updateUser} = useContext(AuthContext)
+    const [isMatch, setisMatch] = useState(false)
+    const navigate = useNavigate()
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
+        setisMatch(false)
         console.log(data)
+        const email = data.email;
+        const passowrd = data.passowrd
+        const confirm = data.confirm
+
+        if(passowrd !== confirm){
+            setisMatch(true)
+            return
+        }
+
+        console.log(email, passowrd)
+        emailSignUp(email, passowrd)
+        .then(res => {
+            const loggedUser = res.user;
+            console.log(loggedUser)
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfully registerd',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              updateUser(data.name, data.photo)
+              .then(() => console.log('profile updated'))
+              .catch((error) => console.log(error))
+              navigate('/')
+        })
+        .catch(error => console.log(error))
+
     };
 
     return (
@@ -44,8 +81,8 @@ const Register = () => {
                                     <label className="label">
                                         <span className="label-text">Select gender [optional]</span>
                                     </label>
-                                    <select {...register("gender", { required: true })} className="select select-bordered">
-                                        <option disabled selected>Select</option>
+                                    <select defaultValue="Select" {...register("gender", { required: true })} className="select select-bordered">
+                                        <option disabled>Select</option>
                                         <option>Male</option>
                                         <option>Female</option>
                                     </select>
@@ -55,7 +92,7 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text">Phone Number [optional]</span>
                                 </label>
-                                <input type="text" {...register("phone", { required: true })} placeholder="re-type password" className="input input-bordered" />
+                                <input type="text" {...register("phone", { required: true })} placeholder="phone number" className="input input-bordered" />
 
                             </div>
                         </div>
@@ -75,6 +112,7 @@ const Register = () => {
                                 </label>
                                 <input type="password" {...register("confirm", { required: true })} placeholder="re-type password" className="input input-bordered" />
                                 {errors.confirm && <span className='text-error'>This field is required</span>}
+                                {isMatch && <p className='text-error'>Password did not match</p>}
                             </div>
                         </div>
 
@@ -83,6 +121,8 @@ const Register = () => {
                         </div>
                     </form>
                 </div>
+                <p className='font-semibold text-white'>Already have an account? <Link to='/login'><span className='text-info'>Login here</span></Link></p>
+                <SocialLogin></SocialLogin>
             </div>
         </div>
     );
