@@ -13,7 +13,7 @@ const Navbar = () => {
     const navItems = <>
         <Link to='/'><li>Home</li></Link>
         <Link to='/instructor'><li>Instructors</li></Link>
-        <Link to='/'><li>Classes</li></Link>
+        <Link to='/classes'><li>Classes</li></Link>
         {user && <Link to='/dashboard'><li>Dashboard</li></Link>}
     </>
     return (

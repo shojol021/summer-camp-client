@@ -5,6 +5,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import SocialLogin from './SocialLogin';
+import axios from 'axios';
 
 const Register = () => {
     const {emailSignUp, updateUser} = useContext(AuthContext)
@@ -36,7 +37,19 @@ const Register = () => {
                 timer: 1500
               })
               updateUser(data.name, data.photo)
-              .then(() => console.log('profile updated'))
+              .then(() => {
+                console.log('profile updated')
+                const savedUser = {
+                    name: data.name,
+                    image: data.photo,
+                    email: data.email,
+                    role: 'student'
+                }
+                axios.post('http://localhost:5000/users', savedUser)
+                .then(res => {
+                    console.log(res.data)
+                })
+              })
               .catch((error) => console.log(error))
               navigate('/')
         })

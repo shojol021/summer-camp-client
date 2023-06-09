@@ -11,6 +11,7 @@ import MyClasses from "../pages/dashboard/instructor/MyClasses";
 import ManageClasses from "../pages/dashboard/admin/ManageClasses";
 import ManageUsers from "../pages/dashboard/admin/ManageUsers";
 import Instructor from "../pages/instructor/Instructor";
+import Classes from "../pages/classes/Classes";
 
   const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ import Instructor from "../pages/instructor/Instructor";
         {
           path: '/instructor',
           element: <Instructor></Instructor>
+        },
+        {
+          path: '/classes',
+          element: <Classes></Classes>
         },
         {
           path: '/dashboard',
