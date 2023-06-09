@@ -1,9 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const Classes = () => {
 
+    const {user} = useContext(AuthContext)
     const [classes, setClasses] = useState([])
 
     useEffect(() => {
@@ -15,9 +18,17 @@ const Classes = () => {
     }, [])
 
     const handleSelectClass = (cls) => {
-        axios.post('http://localhost:5000/select', cls)
+        axios.post('http://localhost:5000/select', {...cls, email: user.email})
         .then(res => {
             console.log(res.data)
+            if(res.data.insertedId){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Class Selected',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
         })
     }
 
