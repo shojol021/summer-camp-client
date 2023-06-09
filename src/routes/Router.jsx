@@ -3,6 +3,14 @@ import Main from "../layouts/Main";
 import Home from "../pages/home/Home";
 import Login from "../pages/login-register/Login";
 import Register from "../pages/login-register/Register";
+import Dashboard from "../pages/dashboard/Dashboard";
+import SelectedClasses from "../pages/dashboard/student/SelectedClasses";
+import EnrolledClasses from "../pages/dashboard/student/EnrolledClasses";
+import AddClass from "../pages/dashboard/instructor/AddClass";
+import MyClasses from "../pages/dashboard/instructor/MyClasses";
+import ManageClasses from "../pages/dashboard/admin/ManageClasses";
+import ManageUsers from "../pages/dashboard/admin/ManageUsers";
+import Instructor from "../pages/instructor/Instructor";
 
   const router = createBrowserRouter([
     {
@@ -20,7 +28,41 @@ import Register from "../pages/login-register/Register";
         {
           path: '/register',
           element: <Register></Register>
-        }
+        },
+        {
+          path: '/instructor',
+          element: <Instructor></Instructor>
+        },
+        {
+          path: '/dashboard',
+          element: <Dashboard></Dashboard>,
+          children: [
+            {
+              path: 'selected-classes',
+              element: <SelectedClasses></SelectedClasses>
+            },
+            {
+              path: 'enrolled-classes',
+              element: <EnrolledClasses></EnrolledClasses>
+            },
+            {
+              path: 'add-class',
+              element: <AddClass></AddClass>
+            },
+            {
+              path: 'my-classes',
+              element: <MyClasses></MyClasses>
+            },
+            {
+              path: 'manage-classes',
+              element: <ManageClasses></ManageClasses>
+            },
+            {
+              path: 'manage-users',
+              element: <ManageUsers></ManageUsers>
+            }
+          ]
+        },
       ]
     },
   ]);

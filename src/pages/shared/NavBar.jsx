@@ -12,9 +12,9 @@ const Navbar = () => {
 
     const navItems = <>
         <Link to='/'><li>Home</li></Link>
-        <Link to='/'><li>Instructors</li></Link>
+        <Link to='/instructor'><li>Instructors</li></Link>
         <Link to='/'><li>Classes</li></Link>
-        {user && <Link to='/'><li>Dashboard</li></Link>}
+        {user && <Link to='/dashboard'><li>Dashboard</li></Link>}
     </>
     return (
         <div className="navbar bg-gray-800 md:text-primary md:px-12">
