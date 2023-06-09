@@ -43,6 +43,8 @@ const Register = () => {
                     name: data.name,
                     image: data.photo,
                     email: data.email,
+                    gender: data?.gender || null,
+                    phone: data?.phone || null,
                     role: 'student'
                 }
                 axios.post('http://localhost:5000/users', savedUser)

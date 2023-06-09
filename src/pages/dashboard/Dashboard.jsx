@@ -1,8 +1,21 @@
+import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const Dashboard = () => {
-    const user = { name: 'Adnan', role: 'admin' }
+
+    const {user} = useContext(AuthContext)
+    const [loggedUser, setLoggedUser] = useState([])
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/users?email=${user.email}`)
+            .then(res => {
+                console.log(res.data)
+                setLoggedUser(res.data)
+            })
+    }, [])
     return (
         <div className="min-h-screen">
             <div className="drawer lg:drawer-open">
@@ -18,19 +31,19 @@ const Dashboard = () => {
                     <ul className="menu p-4 w-80 h-full bg-secondary text-base-content">
                         {/* Sidebar content here */}
                         {
-                            user.role === 'student' && <>
+                            loggedUser?.role === 'student' && <>
                                 <li><Link to='/dashboard/selected-classes'>My Selected Classes</Link></li>
                                 <li><Link to='/dashboard/enrolled-classes'>My Enrolled Classes</Link></li>
                             </>
                         }
                         {
-                            user.role === 'instructor' && <>
+                            loggedUser?.role === 'instructor' && <>
                                 <li><Link to='/dashboard/add-class'>Add a Class</Link></li>
                                 <li><Link to='/dashboard/my-classes'>My Classes</Link></li>
                             </>
                         }
                         {
-                            user.role === 'admin' && <>
+                            loggedUser?.role === 'admin' && <>
                                 <li><Link to='/dashboard/manage-classes'>Manage Classes</Link></li>
                                 <li><Link to='/dashboard/manage-users'>Manage Users</Link></li>
                             </>
