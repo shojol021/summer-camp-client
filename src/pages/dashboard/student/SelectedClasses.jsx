@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 const SelectedClasses = () => {
@@ -25,7 +26,7 @@ const SelectedClasses = () => {
                             <h2 className="card-title">{cls.name}</h2>
                             <p>Click the button to watch on Jetflix app.</p>
                             <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Pay Now</button>
+                                <Link to='/dashboard/payment'><button className="btn btn-primary">Pay Now</button></Link>
                             </div>
                         </div>
                     </div>

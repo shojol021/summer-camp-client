@@ -13,6 +13,7 @@ import ManageUsers from "../pages/dashboard/admin/ManageUsers";
 import Instructor from "../pages/instructor/Instructor";
 import Classes from "../pages/classes/Classes";
 import PrivateRoute from "./PrivateRoute";
+import Payment from "../pages/dashboard/student/Payment";
 
   const router = createBrowserRouter([
     {
@@ -66,6 +67,10 @@ import PrivateRoute from "./PrivateRoute";
             {
               path: 'manage-users',
               element: <ManageUsers></ManageUsers>
+            },
+            {
+              path: 'payment',
+              element: <Payment></Payment>
             }
           ]
         },
