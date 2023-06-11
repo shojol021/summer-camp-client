@@ -12,7 +12,6 @@ const Dashboard = () => {
     useEffect(() => {
         axios.get(`http://localhost:5000/users?email=${user.email}`)
             .then(res => {
-                console.log(res.data)
                 setLoggedUser(res.data)
             })
     }, [])

@@ -1,20 +1,58 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 
 const ManageClasses = () => {
 
-    const [allClasses, setAllClasses] = useState('')
-    useEffect(() => {
-        axios.get('http://localhost:5000/allclasses')
-            .then(res => {
-                console.log(res)
-                setAllClasses(res.data)
-            })
-    }, [])
+    // const [allClasses, setAllClasses] = useState('')
+
+    const {data: allClasses = [], refetch} = useQuery(['classes'], async() => {
+        const res = await axios.get('http://localhost:5000/allclasses')
+        console.log(res)
+        return res.data
+    })
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:5000/allclasses')
+    //         .then(res => {
+    //             console.log(res)
+    //             setAllClasses(res.data)
+    //         })
+    // }, [])
 
     const handleApprove = (id) => {
         axios.patch(`http://localhost:5000/make-approved/${id}`)
+        .then(res =>{
+            console.log(res.data)
+            if(res.data.modifiedCount > 0){
+                refetch()
+                Swal.fire({
+                    title: "Approved",
+                    text: "This class in now published",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+        })
+    }
+
+    const handleDeny = (id) => {
+        axios.patch(`http://localhost:5000/deny/${id}`)
+        .then(res =>{
+            console.log(res.data)
+            if(res.data.modifiedCount > 0){
+                refetch()
+                Swal.fire({
+                    title: "Denied",
+                    text: "The class has been denied",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+        })
     }
 
     return (
@@ -58,11 +96,11 @@ const ManageClasses = () => {
                                     <span className="badge badge-ghost badge-sm">{cls.instructorEmail}</span>
                                 </td>
                                 <td>{cls.availableSeats}</td>
-                                <td>{cls.status ? cls.status : 'Approved'}</td>
+                                <td>{cls.status}</td>
                                 <th>
                                     <div className="btn-group btn-group-vertical">
-                                        <button onClick={() => handleApprove(cls._id)} className="btn btn-xs btn-primary">Approve</button>
-                                        <button className="btn btn-xs btn-secondary">Deny</button>
+                                        <button onClick={() => handleApprove(cls._id)} disabled={cls.status === 'approved'} className="btn btn-xs btn-primary">Approve</button>
+                                        <button onClick={() => handleDeny(cls._id)} className="btn btn-xs btn-secondary" disabled={cls.status === 'approved'}>Deny</button>
                                         <button className="btn btn-xs">Send Feedback</button>
                                     </div>
                                 </th>

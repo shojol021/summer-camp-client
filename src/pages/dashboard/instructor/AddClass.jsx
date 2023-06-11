@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const AddClass = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const onSubmit = (data) => {
         console.log(data)
 
@@ -13,6 +13,7 @@ const AddClass = () => {
         .then(res => {
             console.log(res.data)
             if(res.data.insertedId){
+                reset()
                 Swal.fire({
                     title: 'Class Added',
                     text: 'Admin will approve the class',
