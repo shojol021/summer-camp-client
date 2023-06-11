@@ -1,28 +1,36 @@
 import axios from "axios";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 
 const AddClass = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { user } = useContext(AuthContext)
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        defaultValues: {
+            instructor: user.displayName,
+            instructorEmail: user.email
+        }
+    });
     const onSubmit = (data) => {
         console.log(data)
 
-        axios.post('http://localhost:5000/class', {...data, status: 'pending'})
-        .then(res => {
-            console.log(res.data)
-            if(res.data.insertedId){
-                reset()
-                Swal.fire({
-                    title: 'Class Added',
-                    text: 'Admin will approve the class',
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 3000
-                })
-            }
-        })
+        axios.post('http://localhost:5000/class', { ...data, status: 'pending' })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.insertedId) {
+                    reset()
+                    Swal.fire({
+                        title: 'Class Added',
+                        text: 'Admin will approve the class',
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            })
     }
 
     return (
@@ -55,15 +63,15 @@ const AddClass = () => {
                                 <label className="label">
                                     <span className="label-text">Instructor Name</span>
                                 </label>
-                                <input type="text" {...register("instructor", { required: true })} placeholder="instructor name" className="input input-bordered" />
-                                {errors.instructor && <span className='text-error'>This field is required</span>}
+                                <input defaultValue={user.displayName} readOnly disabled type="text" {...register("instructor")} placeholder="instructor name" className="input input-bordered" />
+
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text">Instructor Email</span>
                                 </label>
-                                <input type="email" {...register("instructorEmail", { required: true })} placeholder="instructor email" className="input input-bordered" />
-                                {errors.instructorEmail && <span className='text-error'>This field is required</span>}
+                                <input defaultValue={user.email} readOnly disabled type="email" {...register("instructorEmail")} placeholder="instructor email" className="input input-bordered" />
+
                             </div>
                         </div>
                         <div className="flex">

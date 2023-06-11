@@ -81,7 +81,8 @@ const ManageClasses = () => {
                                     <div className="flex items-center space-x-3">
                                         <div className="avatar">
                                             <div className="mask mask-squircle w-12 h-12">
-                                                <img src={cls.image} alt="Avatar Tailwind CSS Component" />
+                                                <img src={cls.image} alt="Avatar Tailwind CSS Component" 
+                                                onError={(e) => e.target.src = 'https://i.postimg.cc/zXgFTQTx/images.jpg'}/>
                                             </div>
                                         </div>
                                         <div>
@@ -99,8 +100,8 @@ const ManageClasses = () => {
                                 <td>{cls.status}</td>
                                 <th>
                                     <div className="btn-group btn-group-vertical">
-                                        <button onClick={() => handleApprove(cls._id)} disabled={cls.status === 'approved'} className="btn btn-xs btn-primary">Approve</button>
-                                        <button onClick={() => handleDeny(cls._id)} className="btn btn-xs btn-secondary" disabled={cls.status === 'approved'}>Deny</button>
+                                        <button onClick={() => handleApprove(cls._id)} disabled={cls.status === 'approved' || cls.status === 'denied'} className="btn btn-xs btn-primary">Approve</button>
+                                        <button onClick={() => handleDeny(cls._id)} className="btn btn-xs btn-secondary" disabled={cls.status === 'approved' || cls.status === 'denied'}>Deny</button>
                                         <button className="btn btn-xs">Send Feedback</button>
                                     </div>
                                 </th>

@@ -8,7 +8,7 @@ const ManageUsers = () => {
     // const [allUsers, setAllUsers] = useState([])
     // console.log(allUsers)
 
-    const {data: allUsers = [], refetch} = useQuery(['users'], async () => {
+    const { data: allUsers = [], refetch } = useQuery(['users'], async () => {
         const res = await axios.get('http://localhost:5000/allusers')
         return res.data
     })
@@ -21,35 +21,54 @@ const ManageUsers = () => {
     // }, [])
 
     const handleMakeAdmin = (email) => {
-        axios.patch('http://localhost:5000/user', {email})
-        .then(res => {
-            console.log(res.data)
-            if(res.data.modifiedCount > 0){
-                refetch()
-                Swal.fire({
-                    title: 'Successfully made admin',
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
+        axios.patch('http://localhost:5000/user', { email })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: 'Successfully made admin',
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+
+                console.log('email', email)
+                axios.delete(`http://localhost:5000/instructor/${email}`)
+                    .then(res => {
+                        console.log(res.data)
+                    })
+            })
     }
 
-    const handleMakeInstructor = (email) => {
-        axios.patch('http://localhost:5000/make-instructor', {email})
-        .then(res => {
-            console.log(res.data)
-            if(res.data.modifiedCount > 0){
-                refetch()
-                Swal.fire({
-                    title: 'Successfully made instructor',
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
+    const handleMakeInstructor = (user) => {
+        const email = user.email
+        axios.patch('http://localhost:5000/make-instructor', { email })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: 'Successfully made instructor',
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        const instructor = {
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            classes: []
+        }
+
+        axios.post('http://localhost:5000/instructor', instructor)
+            .then(res => {
+                console.log(res.data)
+            })
     }
 
     return (
@@ -89,7 +108,7 @@ const ManageUsers = () => {
                                     <button onClick={() => handleMakeAdmin(user.email)} disabled={user.role === 'admin'} className="btn btn-primary btn-xs">Make Admin</button>
                                 </td>
                                 <td>
-                                    <button onClick={() => handleMakeInstructor(user.email)} disabled={user.role === 'instructor'} className="btn btn-secondary btn-xs">Make Instructor</button>
+                                    <button onClick={() => handleMakeInstructor(user)} disabled={user.role === 'instructor'} className="btn btn-secondary btn-xs">Make Instructor</button>
                                 </td>
                             </tr>)
                         }
