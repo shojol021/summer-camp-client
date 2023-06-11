@@ -13,7 +13,8 @@ const Classes = () => {
         axios.get('http://localhost:5000/classes')
             .then(res => {
                 console.log(res.data)
-                setClasses(res.data)
+                const filter = res.data.filter(cls => cls.status === 'approved')
+                setClasses(filter)
             })
     }, [])
 
@@ -42,7 +43,8 @@ const Classes = () => {
                         <figure><img src={cls.image} alt="Movie" /></figure>
                         <div className="card-body">
                             <h2 className="card-title">{cls.name}</h2>
-                            <p>Click the button to watch on Jetflix app.</p>
+                            <p>Instructor: {cls.instructor}</p>
+                            <p>Available: {cls.availableSeats}</p>
                             <div className="card-actions justify-end">
                                 <button onClick={() => handleSelectClass(cls)} className="btn btn-primary">Select</button>
                             </div>

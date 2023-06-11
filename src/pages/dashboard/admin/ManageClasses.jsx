@@ -13,6 +13,10 @@ const ManageClasses = () => {
             })
     }, [])
 
+    const handleApprove = (id) => {
+        axios.patch(`http://localhost:5000/make-approved/${id}`)
+    }
+
     return (
         <div className="p-12">
             <h3 className="text-center text-3xl">Manage Classes</h3>
@@ -57,7 +61,7 @@ const ManageClasses = () => {
                                 <td>{cls.status ? cls.status : 'Approved'}</td>
                                 <th>
                                     <div className="btn-group btn-group-vertical">
-                                        <button className="btn btn-xs btn-primary">Approve</button>
+                                        <button onClick={() => handleApprove(cls._id)} className="btn btn-xs btn-primary">Approve</button>
                                         <button className="btn btn-xs btn-secondary">Deny</button>
                                         <button className="btn btn-xs">Send Feedback</button>
                                     </div>
