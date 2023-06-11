@@ -17,6 +17,8 @@ const Classes = () => {
             })
     }, [])
 
+    console.log(classes)
+
     const handleSelectClass = (cls) => {
         axios.post('http://localhost:5000/select', {...cls, email: user.email})
         .then(res => {

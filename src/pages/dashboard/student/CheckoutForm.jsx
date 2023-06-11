@@ -17,8 +17,9 @@ const CheckoutForm = () => {
         if (price > 0) {
             axios.post('http://localhost:5000/payment-intent', { price })
                 .then(res => {
-                    console.log(res.data.clienSecret)
-                    setClientSecret(res.data.clienSecret)
+                    console.log(res)
+                    // console.log(res.data.clientSecret)
+                    setClientSecret(res.data.clientSecret)
                 })
         }
     }, [])
