@@ -20,15 +20,16 @@ const SelectedClasses = () => {
         <div className="grid grid-cols-2 gap-5 p-12">
             {
                 classes.map(cls =>
-                    <div key={cls._id} className="card card-side bg-base-100 shadow-xl">
+                    <div key={cls._id} className="relative card card-side bg-base-100 shadow-xl">
                         <figure><img src={cls.image} alt="Movie" /></figure>
                         <div className="card-body">
                             <h2 className="card-title">{cls.name}</h2>
                             <p>Click the button to watch on Jetflix app.</p>
                             <div className="card-actions justify-end">
-                                <Link to='/dashboard/payment'><button className="btn btn-primary">Pay Now</button></Link>
+                                <Link to='/dashboard/payment' state={{price: cls.price}}><button className="btn btn-primary">Pay Now</button></Link>
                             </div>
                         </div>
+                        <div className="absolute left-4 top-8 bg-info text-white rounded px-2 py-1">${cls.price}</div>
                     </div>
                 )
             }

@@ -50,10 +50,11 @@ const Register = () => {
                 axios.post('http://localhost:5000/users', savedUser)
                 .then(res => {
                     console.log(res.data)
+                    navigate('/')
                 })
               })
               .catch((error) => console.log(error))
-              navigate('/')
+              
         })
         .catch(error => console.log(error))
 
@@ -132,7 +133,7 @@ const Register = () => {
                         </div>
 
                         <div className="form-control mt-6">
-                            <button type='submit' className="btn btn-primary">Login</button>
+                            <button type='submit' className="btn btn-primary">Register</button>
                         </div>
                     </form>
                 </div>

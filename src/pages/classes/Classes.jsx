@@ -45,6 +45,7 @@ const Classes = () => {
                                 <button onClick={() => handleSelectClass(cls)} className="btn btn-primary">Select</button>
                             </div>
                         </div>
+                        <div className="absolute left-4 top-6 bg-info text-white rounded px-2 py-1">${cls.price}</div>
                     </div>
                 )
             }
