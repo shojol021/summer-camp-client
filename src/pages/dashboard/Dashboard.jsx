@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../providers/AuthProvider";
+import { FaFolderPlus } from "react-icons/fa";
+import { FaBeer, FaChalkboard } from 'react-icons/fa';
 
 
 const Dashboard = () => {
@@ -23,6 +25,8 @@ const Dashboard = () => {
                 <div className="drawer-content flex flex-col">
                     {/* Page content here */}
                     <Outlet></Outlet>
+                    <h3 className="text-4xl mt-6 ml-6">Welcome, {user?.displayName}</h3>
+                    
                     <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
 
                 </div>
@@ -38,8 +42,8 @@ const Dashboard = () => {
                         }
                         {
                             loggedUser?.role === 'instructor' && <>
-                                <li><Link to='/dashboard/add-class'>Add a Class</Link></li>
-                                <li><Link to='/dashboard/my-classes'>My Classes</Link></li>
+                                <li><p><FaFolderPlus /><Link to='/dashboard/add-class'>Add a Class</Link></p></li>
+                                <li><p><FaChalkboard /><Link to='/dashboard/my-classes'>My Classes</Link></p></li>
                             </>
                         }
                         {

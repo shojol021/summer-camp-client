@@ -18,7 +18,7 @@ const MyClasses = () => {
 
     return (
         <div className="p-12">
-            <h3 className="text-center text-3xl">My classes</h3>
+            <h3 className="text-center text-3xl mb-4">My classes</h3>
 
             <div className="grid grid-cols-2">
                 {
@@ -30,9 +30,13 @@ const MyClasses = () => {
                                 {cls.name}
                                 <div className="badge badge-secondary">${cls.price}</div>
                             </h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
+                            <p>Student Enrolled: {cls.enrolled? cls.enrolled: "0"}</p>
+                            <p>Feedback: {cls.feedback? cls.feedback: "No feedback"}</p>
                             <div className="card-actions justify-end">
-                                <div className="badge badge-outline">{cls.status}</div>
+                                <div className={`badge 
+                                ${cls.status === 'pending' && 'badge-outline'}
+                                ${cls.status === 'approved' && 'badge-primary'}
+                                ${cls.status === 'denied' && 'badge-error'} `}>{cls.status}</div>
                             </div>
                         </div>
                     </div>
