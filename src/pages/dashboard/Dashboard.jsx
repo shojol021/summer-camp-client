@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../providers/AuthProvider";
-import { FaFolderPlus } from "react-icons/fa";
-import { FaBeer, FaChalkboard } from 'react-icons/fa';
+import { FaFileAlt, FaFolderPlus, FaUserCog } from "react-icons/fa";
+import { FaChalkboard } from 'react-icons/fa';
+import { BiSelectMultiple } from "react-icons/bi";
+import { MdOutlinePaid } from "react-icons/md";
 
 
 const Dashboard = () => {
@@ -36,8 +38,8 @@ const Dashboard = () => {
                         {/* Sidebar content here */}
                         {
                             loggedUser?.role === 'student' && <>
-                                <li><Link to='/dashboard/selected-classes'>My Selected Classes</Link></li>
-                                <li><Link to='/dashboard/enrolled-classes'>My Enrolled Classes</Link></li>
+                                <li><p><BiSelectMultiple /><Link to='/dashboard/selected-classes'>My Selected Classes</Link></p></li>
+                                <li><p><MdOutlinePaid /><Link to='/dashboard/enrolled-classes'>My Enrolled Classes</Link></p></li>
                             </>
                         }
                         {
@@ -48,8 +50,8 @@ const Dashboard = () => {
                         }
                         {
                             loggedUser?.role === 'admin' && <>
-                                <li><Link to='/dashboard/manage-classes'>Manage Classes</Link></li>
-                                <li><Link to='/dashboard/manage-users'>Manage Users</Link></li>
+                                <li><p><FaFileAlt /><Link to='/dashboard/manage-classes'>Manage Classes</Link></p></li>
+                                <li><p><FaUserCog /><Link to='/dashboard/manage-users'>Manage Users</Link></p></li>
                             </>
                         }
                     </ul>
