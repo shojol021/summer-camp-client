@@ -14,11 +14,13 @@ import Instructor from "../pages/instructor/Instructor";
 import Classes from "../pages/classes/Classes";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "../pages/dashboard/student/Payment";
+import ErrorPage from "./ErrorPage";
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
+      errorElement: <ErrorPage></ErrorPage>,
       children: [
         {
           path: '/',
